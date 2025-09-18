@@ -48,7 +48,7 @@ saveCmd
       authToken: options.token,
     });
 
-    console.log(chalk.green(`Request saved under the name: ${name}`));
+    console.log(chalk.green(`Request saved under the name: `), name);
   });
 
 export default saveCmd;
