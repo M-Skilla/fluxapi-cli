@@ -1,6 +1,7 @@
 import { Command } from "commander";
 import { getRequest } from "../utils/store";
 import { generateSnippet } from "../utils/snippet-generator";
+import clipboardy from "clipboardy";
 
 const exportCmd = new Command("export");
 
@@ -8,7 +9,8 @@ exportCmd
   .description("Export a saved request to code snippets in different languages/frameworks")
   .argument("<name>", "Name of the saved request")
   .option("-l, --language <lang>", "Target language/framework\nSupported languages: curl, fetch/javascript, axios, python/requests, java/okhttp, go/golang, php, csharp/c#, ruby, swift, kotlin, rust", "curl")
-  .action(async (name: string, options: { language: string }) => {
+  .option("--copy", "Copy the generated snippet to clipboard", false)
+  .action(async (name: string, options: { language: string; copy: boolean }) => {
     const request = getRequest(name);
 
     if (!request) {
@@ -18,6 +20,15 @@ exportCmd
 
     const snippet = generateSnippet(request, options.language);
     console.log(snippet);
+
+    if (options.copy) {
+      try {
+        await clipboardy.write(snippet);
+        console.log("Snippet copied to clipboard!");
+      } catch (err) {
+        console.error("Failed to copy to clipboard. Something went wrong.");
+      }
+    }
   });
 
 export default exportCmd;
