@@ -12,10 +12,8 @@ listCmd.description("List all saved requests").action(() => {
     return;
   }
 
-  requests.forEach((req) => {
-    console.log(chalk.green("Saved Requests:"));
-    requests.forEach((r) => console.log(`- ${r}`));
-  });
+  console.log(chalk.green("Saved Requests:"));
+  requests.forEach((r) => console.log(`- ${r}`));
 });
 
 export default listCmd;

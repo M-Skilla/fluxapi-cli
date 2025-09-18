@@ -1,7 +1,6 @@
 import { Command } from "commander";
 import { RequestOptions } from "..";
 import { saveRequest } from "../utils/store";
-import chalk from "chalk";
 
 const saveCmd = new Command("save");
 
@@ -9,7 +8,7 @@ saveCmd
   .description("Save a request configuration for future use")
   .argument("<name>", "Name to save the request under")
   .argument("<url>", "URL to send the request to")
-  .option("-m, --method <method>", "HTTP method to use", "GET")
+  .option("-m, --method <method>", "HTTP method to use (Default 'GET')", "GET")
   .option("-H, --header <header...>", "Headers to include in the request")
   .option(
     "-q, --query <query...>",
@@ -25,8 +24,8 @@ saveCmd
     const queryParams: Record<string, string> = {};
     const body = options.body ? JSON.parse(options.body) : undefined;
 
-    if (options.headers) {
-      options.headers.forEach((header) => {
+    if (options.header) {
+      options.header.forEach((header) => {
         const [key, value] = header.split("=");
         headers[key.trim()] = value.trim();
       });
@@ -41,7 +40,7 @@ saveCmd
 
     await saveRequest(name, {
       url,
-      method: options.method || "GET",
+      method: options.method,
       data: body,
       headers,
       queryParams,
