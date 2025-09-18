@@ -16,10 +16,10 @@ const store = new Conf<{ requests: Record<string, savedRequest> }>({
   defaults: { requests: {} },
 });
 
-export const saveRequest = (name: string, request: savedRequest) => {
+export const saveRequest = async (name: string, request: savedRequest) => {
   const requests = store.get("requests");
   if (requests[name]) {
-    const overwrite = confirm({ message: `Overwrite request '${name}'?`, default: false });
+    const overwrite = await confirm({ message: `Overwrite request '${name}'?`, default: false });
     if (!overwrite) {
       console.log(chalk.red("Operation cancelled."));
       return;
@@ -27,6 +27,8 @@ export const saveRequest = (name: string, request: savedRequest) => {
   }
   requests[name] = request;
   store.set("requests", requests);
+
+  console.log(chalk.green(`Request saved under the name: `), name);
 };
 
 export const getRequest = (name: string): savedRequest | undefined => {

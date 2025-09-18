@@ -20,7 +20,7 @@ saveCmd
     "-t, --token <token>",
     "Authentication token to include in the request"
   )
-  .action((name: string, url: string, options: RequestOptions) => {
+  .action(async (name: string, url: string, options: RequestOptions) => {
     const headers: Record<string, string> = {};
     const queryParams: Record<string, string> = {};
     const body = options.body ? JSON.parse(options.body) : undefined;
@@ -39,7 +39,7 @@ saveCmd
       });
     }
 
-    saveRequest(name, {
+    await saveRequest(name, {
       url,
       method: options.method || "GET",
       data: body,
@@ -48,7 +48,6 @@ saveCmd
       authToken: options.token,
     });
 
-    console.log(chalk.green(`Request saved under the name: `), name);
   });
 
 export default saveCmd;
