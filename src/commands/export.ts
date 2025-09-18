@@ -2,6 +2,7 @@ import { Command } from "commander";
 import { getRequest } from "../utils/store";
 import { generateSnippet } from "../utils/snippet-generator";
 import clipboardy from "clipboardy";
+import chalk from "chalk";
 
 const exportCmd = new Command("export");
 
@@ -19,14 +20,15 @@ exportCmd
     }
 
     const snippet = generateSnippet(request, options.language);
+    console.log(chalk.blueBright(`--- Generated ${options.language} snippet for request '${name}' ---`));
     console.log(snippet);
-
+    console.log(chalk.blue("------------------------------------------------------------"));
     if (options.copy) {
       try {
         await clipboardy.write(snippet);
-        console.log("Snippet copied to clipboard!");
+        console.log(chalk.blue("Snippet copied to clipboard!"));
       } catch (err) {
-        console.error("Failed to copy to clipboard. Something went wrong.");
+        console.error(chalk.red("Failed to copy to clipboard. Something went wrong."));
       }
     }
   });
