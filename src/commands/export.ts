@@ -7,7 +7,7 @@ const exportCmd = new Command("export");
 exportCmd
   .description("Export a saved request to code snippets in different languages/frameworks")
   .argument("<name>", "Name of the saved request")
-  .option("-l, --language <lang>", "Target language/framework", "curl")
+  .option("-l, --language <lang>", "Target language/framework\nSupported languages: curl, fetch/javascript, axios, python/requests, java/okhttp, go/golang, php, csharp/c#, ruby, swift, kotlin, rust", "curl")
   .action(async (name: string, options: { language: string }) => {
     const request = getRequest(name);
 
