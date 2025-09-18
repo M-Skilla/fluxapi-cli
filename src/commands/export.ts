@@ -1,0 +1,23 @@
+import { Command } from "commander";
+import { getRequest } from "../utils/store";
+import { generateSnippet } from "../utils/snippet-generator";
+
+const exportCmd = new Command("export");
+
+exportCmd
+  .description("Export a saved request to code snippets in different languages/frameworks")
+  .argument("<name>", "Name of the saved request")
+  .option("-l, --language <lang>", "Target language/framework", "curl")
+  .action(async (name: string, options: { language: string }) => {
+    const request = getRequest(name);
+
+    if (!request) {
+      console.error(`No saved request found with name: ${name}`);
+      process.exit(1);
+    }
+
+    const snippet = generateSnippet(request, options.language);
+    console.log(snippet);
+  });
+
+export default exportCmd;

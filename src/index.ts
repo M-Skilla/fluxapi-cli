@@ -5,6 +5,7 @@ import listCmd from "./commands/list";
 import deleteCmd from "./commands/delete";
 import requestCmd from "./commands/request";
 import chalk from "chalk";
+import exportCmd from "./commands/export";
 
 const program = new Command();
 
@@ -27,6 +28,7 @@ program.addCommand(saveCmd);
 program.addCommand(listCmd);
 program.addCommand(deleteCmd);
 program.addCommand(requestCmd);
+program.addCommand(exportCmd);
 
 process.on('uncaughtException', (error) => {
   if (error instanceof Error && error.name === 'ExitPromptError') {

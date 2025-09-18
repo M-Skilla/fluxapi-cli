@@ -2,7 +2,7 @@ import chalk from "chalk";
 import Conf from "conf";
 import { confirm } from "@inquirer/prompts";
 
-interface savedRequest {
+export interface savedRequest {
   url: string;
   method: string;
   data?: any;
