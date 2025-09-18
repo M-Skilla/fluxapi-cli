@@ -25,7 +25,12 @@ program
   .description(
     "A lightweight, cross-platform command-line interface for interacting with APIs."
   )
-  .version("1.0.0")
+  .version("1.0.0");
+
+program.addCommand(saveCmd);
+program.addCommand(listCmd);
+
+program
   .argument("<url>", "URL to send the request to")
   .option("-m, --method <method>", "HTTP method to use", "GET")
   .option("-H, --header <header...>", "Headers to include in the request")
@@ -104,8 +109,5 @@ program
       console.error(chalk.red("Error: "), error.message);
     }
   });
-
-program.addCommand(saveCmd);
-program.addCommand(listCmd);
 
 program.parse(process.argv);
